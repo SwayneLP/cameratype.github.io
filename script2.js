@@ -6,6 +6,10 @@ let dotFont;
 let points = [];
 let textSizeValue = "400vw";
 let displayedText = "DSAA";
+let smoothEllipseSizeX = 20;
+let smoothEllipseSizeY = 20;
+let smoothedThumbPositions = [];
+let smoothedIndexPositions = [];
 
 function preload() {
   font = loadFont('fonts/FAUNE-DISPLAYBOLDITALIC.OTF');
@@ -68,7 +72,7 @@ function draw() {
     d = dist(thumbX, thumbY, indexFingerX, indexFingerY);
     if (d < 30) {
       fill (255);
-      stroke (0);
+      stroke (255);
     } else {
       fill (0);
       stroke (255);
@@ -83,8 +87,11 @@ function draw() {
     ellipseSizeY = map(indexFingerY, webcam.height / 2, webcam.height, 4, 200, false);
   }
 
+  smoothEllipseSizeX = lerp(smoothEllipseSizeX, ellipseSizeX, 0.2);
+  smoothEllipseSizeY = lerp(smoothEllipseSizeY, ellipseSizeY, 0.2);
+
   for (let i = 0; i < points.length; i++) {
-    ellipse(points[i].x, points[i].y, ellipseSizeX, ellipseSizeY);
+    ellipse(points[i].x, points[i].y, smoothEllipseSizeX, smoothEllipseSizeY);
   }
 
   updateText();
@@ -95,6 +102,11 @@ function drawKeyPoints(offsetX, offsetY){
   stroke(255);
   fill(0, 255, 38);
   strokeWeight(2);
+  
+  if (smoothedThumbPositions.length > hands.length) {
+    smoothedThumbPositions = smoothedThumbPositions.slice(0, hands.length);
+    smoothedIndexPositions = smoothedIndexPositions.slice(0, hands.length);
+  }
   
   for(let i = 0; i < hands.length; i++){
     const hand = hands[i];
@@ -109,6 +121,16 @@ function drawKeyPoints(offsetX, offsetY){
     const drawIndexFingerX = indexFingerX + offsetX;
     const drawIndexFingerY = indexFingerY + offsetY;
 
+    if (!smoothedThumbPositions[i]) {
+      smoothedThumbPositions[i] = { x: drawThumbX, y: drawThumbY };
+      smoothedIndexPositions[i] = { x: drawIndexFingerX, y: drawIndexFingerY };
+    } else {
+      smoothedThumbPositions[i].x = lerp(smoothedThumbPositions[i].x, drawThumbX, 0.25);
+      smoothedThumbPositions[i].y = lerp(smoothedThumbPositions[i].y, drawThumbY, 0.25);
+      smoothedIndexPositions[i].x = lerp(smoothedIndexPositions[i].x, drawIndexFingerX, 0.25);
+      smoothedIndexPositions[i].y = lerp(smoothedIndexPositions[i].y, drawIndexFingerY, 0.25);
+    }
+
     d = dist(thumbX, thumbY, indexFingerX, indexFingerY);
     textSize(d);
     
@@ -120,8 +142,8 @@ function drawKeyPoints(offsetX, offsetY){
       } else {
       }
     
-    ellipse(drawThumbX, drawThumbY, 10);
-    ellipse(drawIndexFingerX, drawIndexFingerY, 10);
+    ellipse(smoothedThumbPositions[i].x, smoothedThumbPositions[i].y, 10);
+    ellipse(smoothedIndexPositions[i].x, smoothedIndexPositions[i].y, 10);
     
   }
 }

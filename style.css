@@ -1,7 +1,74 @@
+@font-face {
+  font-family: Bricolage;
+  src: url(/fonts/BRICOLAGEGROTESQUE-VARIABLEFONT_OPSZ\,WDTH\,WGHT.TTF) format('truetype');
+}
 
 body{
+      background-color: black;
+      position: absolute;
     margin: 0;
     padding: 0;
+    height : 100vh;
     overflow: hidden;
     z-index: 0;
+}
+
+.title {
+    font-size: 2em;
+    position: absolute;
+    top:5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+      color: white;
+      font-family: 'Bricolage', sans-serif;
+      font-weight: 900;
+    z-index: 1;
+}
+
+.subtitle {
+    font-size: 1.5em;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+      color: white;
+      font-family: 'Bricolage', sans-serif;
+      font-weight: 500;
+    z-index: 1;
+}
+
+.description {
+    font-size: 1em;
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+      color: white;
+      font-family: 'Bricolage', sans-serif;
+      font-weight: 300;
+    z-index: 1;
+}
+
+.footer1 {
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+      color: white;
+      font-family: 'Bricolage', sans-serif;
+      font-weight: 300;
+    z-index: 1;
+}
+
+.footer2 {
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+      color: white;
+      font-family: 'Bricolage', sans-serif;
+      font-weight: 300;
+    z-index: 1;
 }
