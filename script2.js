@@ -12,7 +12,7 @@ let yMouse;
 let fValue = 220;
 let sValue = 0;
 let sAlpha = 0;
-let textSizeValue = 400;
+let textSizeValue = "400vw";
 let displayedText = "DSAA";
 
 function preload() {
@@ -44,8 +44,8 @@ function setup() {
 function updateText() {
   
   textAlign(CENTER, CENTER);
-  textSize(textSizeValue);
-  points = dotFont.textToPoints(displayedText, width/2 - textWidth(displayedText)/2, height/2 + textSizeValue/3, textSizeValue, {
+  textSize(parseInt(textSizeValue));
+  points = dotFont.textToPoints(displayedText, width/2 - textWidth(displayedText)/2, height/2 + parseInt(textSizeValue)/3, parseInt(textSizeValue), {
     sampleFactor: 0.1,
     simplifyThreshold: 0
   });
