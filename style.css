@@ -1,20 +1,4 @@
 
-.ballet {
-  font-family: "Ballet", cursive;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Clash Display';
-  src:
-  local(ClashDisplay-Variable),
-  url(/fonts/ClashDisplay-Variable.ttf);
-  font-weight: 200 700;
-  font-style: normal;
-}
-
 body{
     margin: 0;
     padding: 0;

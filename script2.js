@@ -2,24 +2,13 @@ let webcam;
 let handpose;
 let hands = [];
 let font;
-let font2;
-let font3;
-let font4;
 let dotFont;
 let points = [];
-let xMouse;
-let yMouse;
-let fValue = 220;
-let sValue = 0;
-let sAlpha = 0;
 let textSizeValue = "400vw";
 let displayedText = "DSAA";
 
 function preload() {
-  font = loadFont('fonts/Antique-Olive-Std-Black.ttf');
-  font2 = loadFont('fonts/Ballet-Regular-VariableFont_opsz.ttf');
-  font3 = loadFont('fonts/JALLEAU.ttf');
-  font4 = loadFont('fonts/ClashDisplay-Variable.ttf');
+  font = loadFont('fonts/FAUNE-DISPLAYBOLDITALIC.OTF');
 }
 
 function setup() {
@@ -78,9 +67,11 @@ function draw() {
 
     d = dist(thumbX, thumbY, indexFingerX, indexFingerY);
     if (d < 30) {
-      dotFont = font3;
+      fill (255);
+      stroke (0);
     } else {
-      dotFont = font;
+      fill (0);
+      stroke (255);
     }
   }    
 
@@ -88,8 +79,8 @@ function draw() {
     const indexFingerX = hands[0].landmarks[8][0];
     const indexFingerY = hands[0].landmarks[8][1];
 
-    ellipseSizeX = map(indexFingerX, 0, webcam.width, 4, 200, true);
-    ellipseSizeY = map(indexFingerY, 0, webcam.height, 4, 200, true);
+    ellipseSizeX = map(indexFingerX, webcam.width / 2, webcam.width, 4, 200, false);
+    ellipseSizeY = map(indexFingerY, webcam.height / 2, webcam.height, 4, 200, false);
   }
 
   for (let i = 0; i < points.length; i++) {
@@ -134,8 +125,6 @@ function drawKeyPoints(offsetX, offsetY){
     
   }
 }
-
-
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
