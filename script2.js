@@ -85,8 +85,8 @@ function draw() {
   }    
 
   if (hands.length > 0) {
-    const indexFingerX = hands[0].landmarks[8][0]- offsetX;
-    const indexFingerY = hands[0].landmarks[8][1]- offsetY;
+    const indexFingerX = hands[0].landmarks[8][0];
+    const indexFingerY = hands[0].landmarks[8][1];
 
     ellipseSizeX = map(indexFingerX, 0, webcam.width, 4, 200, true);
     ellipseSizeY = map(indexFingerY, 0, webcam.height, 4, 200, true);
