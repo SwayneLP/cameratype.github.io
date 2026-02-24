@@ -1,2 +1,2 @@
-# cameratype.github.io
-Even with your fingers
+# AnimaType
+Just a little Type animator
