@@ -10,6 +10,7 @@ let smoothEllipseSizeX = 20;
 let smoothEllipseSizeY = 20;
 let smoothedThumbPositions = [];
 let smoothedIndexPositions = [];
+let lastTextKey = "";
 
 function preload() {
   font = loadFont('fonts/FAUNE-DISPLAYBOLDITALIC.OTF');
@@ -35,13 +36,19 @@ function setup() {
 }
 
 function updateText() {
-  
+  const size = parseInt(textSizeValue);
+  const currentTextKey = `${displayedText}-${size}-${width}-${height}`;
+  if (currentTextKey === lastTextKey) {
+    return;
+  }
+
   textAlign(CENTER, CENTER);
-  textSize(parseInt(textSizeValue));
-  points = dotFont.textToPoints(displayedText, width/2 - textWidth(displayedText)/2, height/2 + parseInt(textSizeValue)/3, parseInt(textSizeValue), {
+  textSize(size);
+  points = dotFont.textToPoints(displayedText, width / 2 - textWidth(displayedText) / 2, height / 2 + size / 3, size, {
     sampleFactor: 0.1,
     simplifyThreshold: 0
   });
+  lastTextKey = currentTextKey;
 }
 
 function modelLoaded(){
@@ -52,6 +59,7 @@ function draw() {
   background(0);
   const offsetX = (width - webcam.width) / 2;
   const offsetY = (height - webcam.height) / 2;
+  updateText();
   
 
   fill(0);
@@ -61,7 +69,7 @@ function draw() {
   let ellipseSizeX = 20;
   let ellipseSizeY = 20;
 
-  for(let i = 0; i < hands.length; i++){
+  for (let i = 0; i < hands.length; i++) {
     const hand = hands[i];
     
     const thumbX = hand.landmarks[4][0];
@@ -69,8 +77,10 @@ function draw() {
     const indexFingerX = hand.landmarks[8][0];
     const indexFingerY = hand.landmarks[8][1];
 
-    d = dist(thumbX, thumbY, indexFingerX, indexFingerY);
-    if (d < 30) {
+    const dx = thumbX - indexFingerX;
+    const dy = thumbY - indexFingerY;
+    const pinchDistSq = dx * dx + dy * dy;
+    if (pinchDistSq < 900) {
       fill (255);
       stroke (255);
     } else {
@@ -94,7 +104,6 @@ function draw() {
     ellipse(points[i].x, points[i].y, smoothEllipseSizeX, smoothEllipseSizeY);
   }
 
-  updateText();
   fill(0, 255, 38);
   stroke(0, 255, 38);
   strokeWeight(2);
@@ -108,7 +117,7 @@ function drawKeyPoints(offsetX, offsetY){
     smoothedIndexPositions = smoothedIndexPositions.slice(0, hands.length);
   }
   
-  for(let i = 0; i < hands.length; i++){
+  for (let i = 0; i < hands.length; i++) {
     const hand = hands[i];
     
     const thumbX = hand.landmarks[4][0];
@@ -131,11 +140,13 @@ function drawKeyPoints(offsetX, offsetY){
       smoothedIndexPositions[i].y = lerp(smoothedIndexPositions[i].y, drawIndexFingerY, 0.25);
     }
 
-    d = dist(thumbX, thumbY, indexFingerX, indexFingerY);
+    const dx = thumbX - indexFingerX;
+    const dy = thumbY - indexFingerY;
+    const d = Math.sqrt(dx * dx + dy * dy);
     textSize(d);
     
-     counter = floor(d);
-      if(counter > 0 && counter <30){
+    const counter = floor(d);
+      if (counter > 0 && counter < 30) {
       } else if(counter > 31 && counter <50){
       } else if(counter > 51 && counter < 70){
       } else if(counter > 71 && counter < 90){
@@ -150,4 +161,6 @@ function drawKeyPoints(offsetX, offsetY){
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  lastTextKey = "";
+  updateText();
 }
