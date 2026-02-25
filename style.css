@@ -1,11 +1,11 @@
 @font-face {
   font-family: Bricolage;
-  src: url(/fonts/BRICOLAGEGROTESQUE-VARIABLEFONT_OPSZ\,WDTH\,WGHT.TTF) format('truetype');
+  src: url(fonts/BRICOLAGEGROTESQUE-VARIABLEFONT_OPSZ\,WDTH\,WGHT.TTF) format('truetype');
 }
 
 @font-face {
   font-family: FlorDeRuina;
-  src: url(/fonts/FlorDeRuina-Ruina.woff2) format('woff2');
+  src: url(fonts/FlorDeRuina-Ruina.woff2) format('woff2');
 }
 
 body{

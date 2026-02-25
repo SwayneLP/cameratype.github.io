@@ -95,13 +95,13 @@ function draw() {
   }
 
   updateText();
+  fill(0, 255, 38);
+  stroke(0, 255, 38);
+  strokeWeight(2);
   drawKeyPoints(offsetX, offsetY);
 }
 
 function drawKeyPoints(offsetX, offsetY){
-  stroke(255);
-  fill(0, 255, 38);
-  strokeWeight(2);
   
   if (smoothedThumbPositions.length > hands.length) {
     smoothedThumbPositions = smoothedThumbPositions.slice(0, hands.length);
@@ -142,8 +142,8 @@ function drawKeyPoints(offsetX, offsetY){
       } else {
       }
     
-    ellipse(smoothedThumbPositions[i].x, smoothedThumbPositions[i].y, 10);
-    ellipse(smoothedIndexPositions[i].x, smoothedIndexPositions[i].y, 10);
+    ellipse(smoothedThumbPositions[i].x, smoothedThumbPositions[i].y, 30);
+    ellipse(smoothedIndexPositions[i].x, smoothedIndexPositions[i].y, 30);
     
   }
 }
