@@ -59,7 +59,6 @@ function draw() {
   background(0);
   const offsetX = (width - webcam.width) / 2;
   const offsetY = (height - webcam.height) / 2;
-  updateText();
   
 
   fill(0);
